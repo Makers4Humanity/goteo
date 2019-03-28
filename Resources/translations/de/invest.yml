@@ -62,6 +62,7 @@ invest-payment-email: 'Tragen Sie Ihren PayPal Usernamen ein'
 invest-payment-fail: 'Bei der Bezahlung ist etwas schiefgelaufen'
 invest-payment-success: 'Die Bezahlung wurde korrekt abgewickelt'
 invest-payment_method-header: 'Wählen Sie Ihre Bezahlmethode'
+invest-payment-method: 'Método de pago'
 invest-paypal-method: PayPal
 invest-paypal_disabled: "Dieses Projekt hat die Möglichkeit der Zahlung über PayPal deaktiviert. <a href=\"/faq/investors#q2\" target=\"_blank\">Mehr Infos</a>"
 invest-pool: 'Für den Fall, dass das Projekt nicht zustande kommt, soll mein Beitrag in meine virtuelle Geldbörse gespeichert werden, damit ich damit zu einem beliebigen späteren Zeitpunkt andere Projekte unterstützen kann. In jedem Fall wird meine Spendenbescheinigung das heutige Datum tragen.'
@@ -86,6 +87,7 @@ invest-status-processing: Nicht vollständig
 invest-status-relocated: Wiederhergestellt
 invest-status-returned: 'Abgelegt (archiviert)'
 invest-status-to-pool: 'In meine Geldbörse'
+invest-status-donated: 'Donado a Fundación'
 invest-step-1: Belohnung
 invest-step-2: Bezahlung
 invest-step-3: Überprüfung

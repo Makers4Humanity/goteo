@@ -30,6 +30,7 @@ translator-field-share_facebook: 'Nachricht auf Facebook teilen'
 translator-field-share_twitter: 'Nachricht auf Twitter teilen'
 translator-field-text: Text
 translator-field-title: Title
+translator-field-subtitle: subtítulo
 translator-field-twitter_msg: 'Twitter Nachricht'
 translator-field-twitter_msg_owner: 'Twitter Autor'
 translator-field-url: URL
@@ -61,6 +62,9 @@ translator-saved-ko: 'Übersetzung in %LANG% konnte nicht gespeichert werden (%E
 translator-saved-ok: 'Übersetzung wurde korrekt gespeichert für die Sprachen [%s]'
 translator-skipped-fields: "Einige Felder wurden nicht kopiert, da sie bereits Text enthalten.\nLöschen Sie den Originaltext, um das Kopieren aus einer anderen Sprache zu ermöglichen."
 translator-sphere: 'Tätigkeitsfehler'
+translator-social_commitment: 'Compromisos sociales'
+translator-sdg: 'ODS'
+translator-footprint: 'Huellas'
 translator-stories: 'Erfolgstories'
 translator-system: System
 translator-tables: 'Allgemeine Tabellen'

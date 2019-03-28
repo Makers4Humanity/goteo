@@ -31,6 +31,8 @@ error-user-email-token-invalid: 'Der Code ist inkorrekt'
 error-user-password-confirm: 'Die Passwortbestätigung entspricht nicht dem Passwort'
 error-user-password-empty: 'Sie haben kein Passwort angegeben'
 error-user-password-invalid: 'Das Passwort ist zu kurz. Es muss aus mindestens 6 Zeichen bestehen.'
+error-user-id-invalid: 'El id de usuario no es válido. Usar sólo carácteres a-z 0-9'
+error-user-id-exists: 'Ya hay un usuario registrado con este id'
 error-user-wrong-password: 'Das Passwort ist falsch.'
 explain-project-progress: 'Diese Grafik visualisiert den Level Ihrer eingegebenen Daten sowie eine einfache, automatisierte Evaluation. Um das Projekt zu veröffentlichen, muss es mindestens 80% erreichen. Die Kriterien, die zum Ansteigen des Prozentsatzes führen beinhalten Ihre relevanten Informationen, die Projektmedien, Bilder und Links, die Sie eingeben, den Grad der Offenheit Ihrer gewählten Projektlizenz, die Stimmigkeit Ihrer Kosten-Schätzung in Bezug auf die zu erledigende Arbeit, etc. Nutzen Sie auch die Tipps auf der rechten Seite, die Ihnen durch den Prozess helfen.'
 fancybox: 'Fancybox text'
@@ -54,6 +56,7 @@ horizontal-project-percent: 'finanziert'
 horizontal-project-reached: 'erreicht'
 invest-individual-header: 'Sie können auf die Projektbelohnung für Ihre Zuwendung verzichten oder diejenige wählen, die dem Betrag Ihrer Zuwendung oder einem kleineren als dem von Ihnen eingetragenen Betrag entspricht.'
 login-register-conditions: 'Mit der Registrierung bestätigen Sie Ihre Zustimmung zu unseren <a href="/legal/terms">Nutzungsbedingungen</a>, <a href="/legal/privacy">Datenschutzrichtlinien</a> und <a href="/legal/cookies">Cookie Richtlinien</a>.'
+login-register-accept-newsletter: 'Quiero recibir la newsletter'
 login-accept-conditions: 'Ich akzeptiere die <a href="/legal/terms">Nutzungsbedingungen</a>, <a href="/legal/privacy">Datenschutzrichtlinie</a> und <a href="/legal/cookies">Cookie-Richtlinie</a>.'
 mandatory-cost-field-type: 'Sie müssen eine Kostenart auswählen'
 mandatory-individual_reward-field-amount: 'Sie müssen den Betrag angeben, ab dem die Belohnung verfügbar ist.'
@@ -69,20 +72,29 @@ project-invest-total: 'Gesamte Zusendungen'
 project-messages-send_message-your_answer: 'Schreiben Sie hier Ihre Antwort'
 project-messages-send_message_support-your_answer: 'Schreiben Sie hier Ihre Kooperationsnachricht an %s'
 regular-add: Neue Registrierung
+regular-all: Todos
 regular-admin_board: 'Admin Panel'
+regular-author: 'Autor'
 regular-allsome: 'alle/einige'
 regular-anonymous: Anonym
 regular-ask: Frage
 regular-submit: Senden
+regular-slug: Identificador único
 regular-by: 'Von:'
 regular-calendar: Kalender
 regular-cancel: Abbrechen
 regular-cancel-back: 'Abbrechen und zurück'
+regular-categories: 'Categorías'
+regular-social_commitments: 'Compromisos sociales'
+regular-spheres: 'Ámbitos'
+regular-sdgs: 'ODS'
+regular-footprints: 'Huellas'
 regular-back: 'Zurück'
 regular-channel: Kanal
 regular-collaborate: Kooperieren Sie
 regular-content: Inhalt
 regular-continue-question: 'Weiter?'
+regular-continue: 'Continuar'
 regular-create: 'Erstellen Sie ein Projekt'
 regular-date: Datum
 regular-date_in: Datum der Eintragung
@@ -115,6 +127,7 @@ regular-hello: Hallo
 regular-here: hier
 regular-help: Hilfe
 regular-home: Start
+regular-id: Identificador (ID)
 regular-identica: Identi.ca
 regular-im: Ich bin
 regular-instagram: Instagram
@@ -134,6 +147,7 @@ regular-male: männlich
 regular-others: Sonstige
 regular-manage_board: 'Processing Agency Panel'
 regular-mandatory: 'Erforderliches Feld!'
+regular-matchfunding: 'Matchfunding'
 regular-media_legend: Legende
 regular-menu: Menü
 regular-menu-personal: Persönliches Menü
@@ -157,6 +171,7 @@ regular-round: 'Runde'
 regular-save: Sichern
 regular-schedule: Zeitplan
 regular-search: Suchen
+regular-search-user: Buscar un usuario
 regular-search-desc: 'Geben Sie Ihren Suchbegriff hier ein'
 regular-search-tooltip: 'Geben Sie Ihren Suchbegriff ein und drücken Sie die Eingabetaste'
 regular-see_all: 'Alle anzeigen'
@@ -177,6 +192,7 @@ regular-title: Title
 regular-text: Text
 regular-media: Video (Youtube, Vimeo)
 regular-total: Gesamt
+regular-donations: Donaciones (No incluído en aportes)
 regular-translate: Übersetzen
 regular-translations: 'Übersetzungen'
 regular-translate_board: 'Übersetzungsfeld'
@@ -206,6 +222,7 @@ regular-copied: 'In Zwischenablage kopiert!'
 regular-remember-me: 'Meine Daten speichern'
 regular-next: Weiter
 regular-previous: Zurück
+regular-next-workshops: 'Agenda de Fundlabs'
 session-about-to-expire: 'Ihre Sitzung wird in 10 Minuten ablaufen, wollen Sie erneut laden?'
 session-expired: 'Ihre Sitzung ist abgelaufen'
 spread-about: 'Text spread-about'
@@ -230,3 +247,6 @@ user-register-success: 'Der User wurde korrekt registriert. Wir senden Ihnen jet
 validate-project-social_rewards: 'Sie müssen zumindest einen kollektiven Nutzen benennen'
 validate-project-total-costs: "Die optimalen Kosten dürfen die Mindestkosten nicht um mehr als 50% übersteigen. Entweder Sie erhöhen die notwendigen Kosten oder Sie senken die Mehrkosten."
 user-promoter: 'Der veranstaltende Benutzer'
+stories-type-pitcher: 'Pitcher'
+stories-type-matcher: 'Matcher'
+newsletter-donate-description: 'Para que podamos seguir ayudando a que más y más iniciativas cívicas salgan adelante'

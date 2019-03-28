@@ -21,6 +21,7 @@ support-sure-to-delete: 'Sind Sie sicher, dass Sie diese Nachricht löschen möc
 support-public-message: 'Diese Nachricht wird auf der Projekthomepage veröffentlicht'
 support-private-message: 'Private Nachricht an:'
 support-private_all-message: 'Diese Nachricht wird an die Teilnehmer von diesem Thread gesendet werden'
+support-owner-message: 'Este mensaje se enviará al autor de este hilo'
 support-is-private: 'Private Nachricht'
 support-set-private-message: 'Sendet nur für die Teilnehmer in diesem thread'
 support-send-private-message: 'Eine private Nachricht an diesen Benutzer senden'

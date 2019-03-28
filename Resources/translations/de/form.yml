@@ -36,6 +36,8 @@ project-one-round: 'Eine 40-Tage-Runde'
 project-personal-field-entity_name: 'The party on behalf of which you are acting (if applicable)'
 project-two-rounds: 'Zwei 40-Tage-Runden'
 tooltip-project-personal-entity_name: 'If you represent an entity, this is the indicated place to let it be known.'
+tooltip-text-type-change: 'Esto cambiará el tipo de editor de texto.<br><b>Nota:</b> Al cambiar entre markdown y html pueden perderse algunos estilos.'
+tooltip-drag-and-drop-images: 'Para incorporar imágenes, puedes arrastrar y soltar los archivos directamente en el editor'
 form-sent-success: 'Die Daten wurden korrekt gespeichert!'
 form-sent-error: 'Fehler beim Speichern von Daten: [%s]'
 form-confirm-exit: "Verlieren Sie Daten, die Sie nicht gespeichert haben. Sind Sie sicher, dass Sie die Seite verlassen wollen?"
