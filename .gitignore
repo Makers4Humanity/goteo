@@ -35,4 +35,3 @@ composer.lock
 phpunit.xml
 /tests/build
 .couscous
-.DS_Store
