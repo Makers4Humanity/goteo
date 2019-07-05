@@ -40,7 +40,7 @@ services:
       - "35729:35729"
 
   geoip:
-    image: igortimoshenko/docker-maxmind-geoip
+    image: alexm4h/docker-maxmind-geoip
     container_name: goteo-geoip
     volumes:
       - goteo-geoip:/usr/share/GeoIP
