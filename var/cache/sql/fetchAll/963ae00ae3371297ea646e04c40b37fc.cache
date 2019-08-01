@@ -1,0 +1,10 @@
+O:20:"FileSystemCacheValue":5:{s:3:"key";O:18:"FileSystemCacheKey":2:{s:3:"key";s:383:"
+            SELECT
+                DISTINCT(user_role.user_id) as admin,
+                user.name as name
+            FROM user_role
+            INNER JOIN user
+                ON user.id = user_role.user_id
+             WHERE user_role.role_id IN ('admin', 'superadmin') AND user_role.node_id = ?
+            ORDER BY user.name ASC
+            a:1:{i:0;s:5:"goteo";}a:1:{i:0;i:5;}";s:5:"group";s:12:"sql/fetchAll";}s:5:"value";a:0:{}s:3:"ttl";i:5;s:7:"expires";i:1564675527;s:7:"created";i:1564675522;}

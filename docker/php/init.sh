@@ -64,9 +64,9 @@ if [ ! -f $GOTEO_CONFIG_FILE ]; then
     exit 1
 fi
 
-USER_ID=${UID:-9999}
-useradd --shell /bin/bash -u $USER_ID -o -c "" -m goteo
-usermod -u $USER_ID goteo
+MYUID=${MYUID:-9999}
+useradd --shell /bin/bash -u $MYUID -o -c "" -m goteo
+usermod -u $MYUID goteo
 export HOME=/application
 # ensure php can write in this directories
 chown goteo.goteo /application
@@ -79,7 +79,7 @@ create_variables $GOTEO_CONFIG_FILE
 
 gosu goteo composer install
 gosu goteo npm install
-gosu goteo bin/console migrate install
+gosu goteo bin/console migrate # install
 
 if [ "$DEBUG" = false ] || [ "$DEBUG" = 0 ]; then
     gosu goteo grunt build:dist

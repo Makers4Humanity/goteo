@@ -1,0 +1,11 @@
+O:20:"FileSystemCacheValue":5:{s:3:"key";O:18:"FileSystemCacheKey":2:{s:3:"key";s:318:"
+            SELECT
+                id,
+                name,
+                url,
+                image
+            FROM    sponsor
+            WHERE node = :node
+            ORDER BY `order` ASC, name ASC
+            LIMIT 0, 10
+            a:1:{s:5:":node";s:5:"goteo";}a:2:{i:0;i:8;i:1;s:19:"Goteo\Model\Sponsor";}";s:5:"group";s:12:"sql/fetchAll";}s:5:"value";a:0:{}s:3:"ttl";i:5;s:7:"expires";i:1564675528;s:7:"created";i:1564675523;}

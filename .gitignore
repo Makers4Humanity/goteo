@@ -37,3 +37,5 @@ phpunit.xml
 .couscous
 /docker-compose-local.yml
 .DS_Store
+/.devcontainer/*
+goteo.code-workspace

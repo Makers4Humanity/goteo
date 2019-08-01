@@ -1,0 +1,29 @@
+O:20:"FileSystemCacheValue":5:{s:3:"key";O:18:"FileSystemCacheKey":2:{s:3:"key";s:1544:"SELECT
+                banner.id as id,
+                banner.node as node,
+                banner.project as project,
+                project.name as name,
+                IF('es'='de', `banner`.`title`, IFNULL(IFNULL(b.`title`,c.`title`), `banner`.`title`)) AS `title`,
+IF('es'='de', `banner`.`description`, IFNULL(IFNULL(b.`description`,c.`description`), `banner`.`description`)) AS `description`,
+IF('es'='de', `banner`.`url`, IFNULL(IFNULL(b.`url`,c.`url`), `banner`.`url`)) AS `url`,
+                project.status as status,
+                project.name as project_name,
+                project.days as project_days,
+                project.amount as project_amount,
+                project.mincost as project_mincost,
+                project.maxcost as project_maxcost,
+                user.name as project_user_name,
+                banner.image as image,
+                banner.order as `order`,
+                banner.active as `active`,
+                project.social_commitment as project_social_commitment
+            FROM    banner
+            LEFT JOIN project
+                ON project.id = banner.project
+            LEFT JOIN user
+                ON user.id = project.owner
+            LEFT JOIN `banner_lang` b ON `banner`.id=b.id AND b.lang='de' AND b.lang!='es'
+LEFT JOIN `banner_lang` c ON `banner`.id=c.id AND c.lang='en' AND c.lang!='es'
+            WHERE banner.node = :node
+             AND banner.active = 1
+            ORDER BY `order` ASCa:1:{s:5:":node";s:5:"goteo";}a:2:{i:0;i:8;i:1;s:18:"Goteo\Model\Banner";}";s:5:"group";s:12:"sql/fetchAll";}s:5:"value";a:0:{}s:3:"ttl";i:5;s:7:"expires";i:1564675527;s:7:"created";i:1564675522;}

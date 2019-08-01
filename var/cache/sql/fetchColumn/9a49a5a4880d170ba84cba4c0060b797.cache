@@ -1,0 +1,10 @@
+O:20:"FileSystemCacheValue":5:{s:3:"key";O:18:"FileSystemCacheKey":2:{s:3:"key";s:599:"SELECT COUNT(*)
+                    FROM project
+                LEFT JOIN project_conf ON project_conf.project=project.id
+                LEFT JOIN user ON user.id=project.owner
+                
+                    INNER JOIN promote ON promote.project = project.id
+                    WHERE
+                    project.id != ''
+                  
+                   AND project.status = :status AND project.published >= :published_since AND promote.active = 1 AND promote.node = :promote_nodea:3:{s:7:":status";i:3;s:16:":published_since";s:10:"2019-02-01";s:13:":promote_node";s:5:"goteo";}a:0:{}";s:5:"group";s:15:"sql/fetchColumn";}s:5:"value";s:1:"0";s:3:"ttl";i:5;s:7:"expires";i:1564675527;s:7:"created";i:1564675522;}

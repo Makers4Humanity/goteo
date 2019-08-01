@@ -1,0 +1,39 @@
+O:20:"FileSystemCacheValue":5:{s:3:"key";O:18:"FileSystemCacheKey":2:{s:3:"key";s:1968:"SELECT
+                stories.id as id,
+                stories.node as node,
+                stories.project as project,
+                stories.lang as lang,
+                IF(`stories`.lang='de', `stories`.`title`, IFNULL(IFNULL(b.`title`,c.`title`), `stories`.`title`)) AS `title`,
+IF(`stories`.lang='de', `stories`.`description`, IFNULL(IFNULL(b.`description`,c.`description`), `stories`.`description`)) AS `description`,
+IF(`stories`.lang='de', `stories`.`review`, IFNULL(IFNULL(b.`review`,c.`review`), `stories`.`review`)) AS `review`,
+                stories.url as url,
+                stories.image as image,
+                stories.pool_image as pool_image,
+                stories.pool as pool,
+                stories.text_position as text_position,
+                stories.order as `order`,
+                stories.post as `post`,
+                stories.active as `active`,
+                stories.type as `type`,
+                stories.landing_pitch as `landing_pitch`,
+                stories.landing_match as `landing_match`,
+                stories.sphere as `sphere`,
+
+                project.id as project_id,
+                project.name as project_name,
+                project.amount as project_amount,
+                project.num_investors as project_num_investors,
+
+                user.id as user_id,
+                user.name as user_name,
+                :viewLang as viewLang
+            FROM stories
+            LEFT JOIN project
+                ON project.id = stories.project
+            LEFT JOIN user
+                ON user.id = project.owner
+            LEFT JOIN `stories_lang` b ON `stories`.id=b.id AND b.lang='de' AND b.lang!=`stories`.lang
+LEFT JOIN `stories_lang` c ON `stories`.id=c.id AND c.lang='en' AND c.lang!=`stories`.lang
+             WHERE stories.active = :active
+            ORDER BY `order` ASC
+            LIMIT 0,10a:2:{s:7:":active";b:1;s:8:"viewLang";s:2:"de";}a:2:{i:0;i:8;i:1;s:19:"Goteo\Model\Stories";}";s:5:"group";s:12:"sql/fetchAll";}s:5:"value";a:0:{}s:3:"ttl";i:5;s:7:"expires";i:1564675527;s:7:"created";i:1564675522;}
