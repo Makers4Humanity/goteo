@@ -315,6 +315,9 @@ class ProjectDashboardController extends DashboardController {
         if ($form->isSubmitted() && $request->isMethod('post')) {
             try {
                 $processor->save($form, true);
+                $data = $form->getData();
+                $project->replaceSdgs($data['sdgs']);
+
                 Message::info(Text::get('dashboard-project-saved'));
                 return $this->redirect($this->getEditRedirect('overview', $request));
             } catch(FormModelException $e) {
@@ -979,6 +982,8 @@ class ProjectDashboardController extends DashboardController {
         if(in_array($key, ['id', 'invested', 'user', 'amount', 'reward', 'fulfilled']) && in_array($dir, ['ASC', 'DESC'])) {
             $order = "$key $dir";
         }
+
+        $order .= ', id DESC';
 
         // TODO: save to session with current filter values?
         $filter = $request->query->get('filter');

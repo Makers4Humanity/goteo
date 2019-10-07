@@ -24,6 +24,7 @@ use Goteo\Application\Config;
 use Goteo\Application\AppEvents;
 use Goteo\Application\Event\FilterProjectPostEvent;
 use Goteo\Model\Invest;
+use Goteo\Model\Invest\InvestMsg;
 use Goteo\Model\Project;
 use Goteo\Model\Project\Image as ProjectImage;
 use Goteo\Model\Project\Reward;
@@ -537,8 +538,8 @@ class ProjectsApiController extends AbstractApiController {
             throw new ControllerAccessDeniedException(Text::get('dashboard-project-not-alive-yet'));
         }
 
-        $limit = 10;
-        $order = 'invested DESC';
+        $limit = 50;
+        $order = 'invested DESC, id DESC';
         $filter = ['projects' => $prj->id, 'status' => [Invest::STATUS_CHARGED, Invest::STATUS_PAID, Invest::STATUS_RETURNED, Invest::STATUS_RELOCATED, Invest::STATUS_TO_POOL]];
         $total = Invest::getList($filter, null, 0, 0, true);
 
@@ -556,6 +557,9 @@ class ProjectsApiController extends AbstractApiController {
                      Text::get('overview-field-reward'),
                      Text::get('dashboard-rewards-fulfilled_status'),
                      Text::get('admin-address'),
+                     Text::get('personal-field-location'),
+                     Text::get('personal-field-zipcode'),
+                     Text::get('personal-field-country'),
                      Text::get('regular-date')];
             fputcsv($buffer, $data);
             flush();
@@ -570,7 +574,10 @@ class ProjectsApiController extends AbstractApiController {
                     $name = $inv->getUser()->name;
                     $email = $inv->getUser()->email;
                     $a = $inv->getAddress();
-                    $address = $a->address . ', ' . $a->location . ', ' . $a->zipcode .' ' . $a->country;
+                    $address = $a->address;
+                    $location= $a->location;
+                    $zipcode=$a->zipcode;
+                    $country= $a->country;
                     $reward = $inv->getRewards() ? $inv->getRewards()[0]->getTitle() : '';
                     if($inv->resign) {
                         $reward = $address = '';
@@ -595,6 +602,9 @@ class ProjectsApiController extends AbstractApiController {
                              $reward,
                              Text::get('regular-' . ($inv->fulfilled ? 'yes' : 'no')),
                              $address,
+                             $location,
+                             $zipcode,
+                             $country,
                              date_formater($inv->invested) ];
                     fputcsv($buffer, $data);
                 }
@@ -614,4 +624,27 @@ class ProjectsApiController extends AbstractApiController {
 
         return $response;
     }
+
+     /**
+     * Delete a comment
+     */
+    public function projectDeleteSupportMsgAction($mid, Request $request) {
+        if(!$this->user) {
+            throw new ControllerAccessDeniedException();
+        }
+        if( !$message = InvestMsg::get($mid) ) {
+            throw new ModelNotFoundException("Message [$mid] not found");
+        }
+
+        if(!$this->user->hasRole(['admin', 'superadmin', 'root'])) {
+            throw new ControllerAccessDeniedException();
+        }
+
+        $message->dbDelete(['invest']);
+
+        // Send and event to create the Feed and/or update number of collaborations
+
+        return $this->jsonResponse(['invest' => $message->invest]);
+    }
+
 }

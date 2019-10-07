@@ -253,6 +253,23 @@ $api->add('api-projects-invests-csv', new Route(
         )
 ));
 
+// Projects list
+$api->add('api-ods-suggestion', new Route(
+    '/social-commitment/ods-suggestion',
+    array('_controller' => 'Goteo\Controller\Dashboard\AjaxDashboardController::odsSuggestionAction',
+        )
+));
+
+$api->add('api-invest-msg-delete', new Route(
+    '/projects/invest-msg/{mid}',
+    array('_controller' => 'Goteo\Controller\Api\ProjectsApiController::projectDeleteSupportMsgAction'),
+    array(), // requirements
+    array(), // options
+    '', // host
+    array(), // schemes
+    array('DELETE') // methods
+));
+
 // Calls list
 $api->add('api-calls', new Route(
     '/calls',
@@ -266,7 +283,6 @@ $api->add('api-channels', new Route(
     array('_controller' => 'Goteo\Controller\Api\ChannelsApiController::channelsAction',
         )
 ));
-
 
 // Licenses list
 $api->add('api-licenses', new Route(
@@ -334,6 +350,19 @@ $api->add('api-comments-delete', new Route(
     array('DELETE') // methods
 ));
 
+// Communication 
+
+// Post images upload (POST method only)
+$api->add('api-communication-images-upload', new Route(
+    '/communication/images',
+    array('_controller' => 'Goteo\Controller\Api\CommunicationApiController::uploadImagesAction'),
+    array(), // requirements
+    array(), // options
+    '', // host
+    array(), // schemes
+    array('POST') // methods
+));
+
 // Messages list
 $api->add('api-messages-project', new Route(
     '/projects/{pid}/messages',
@@ -379,6 +408,17 @@ $api->add('api-matcher-list', new Route(
 $api->add('api-matcher-item', new Route(
     '/matchers/{mid}',
     array('_controller' => 'Goteo\Controller\Api\MatchersApiController::matcherAction')
+));
+
+// Workshops images upload (POST method only)
+$api->add('api-workshops-images-upload', new Route(
+    '/workshops/images',
+    array('_controller' => 'Goteo\Controller\Api\WorkshopsApiController::uploadImagesAction'),
+    array(), // requirements
+    array(), // options
+    '', // host
+    array(), // schemes
+    array('POST') // methods
 ));
 
 return $api;

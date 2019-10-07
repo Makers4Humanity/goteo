@@ -4,7 +4,7 @@ $project=$this->project;
 
 if($this->is_pronto()):
     echo json_encode([
-        'title' => $this->ee($this->project->name),
+        'title' => $this->project->name,
         'content' => $this->supply('main-content')
         ]);
     return;
@@ -22,7 +22,7 @@ elseif($project->gallery[0]){
 
 $this->layout('layout', [
     'bodyClass' => 'project',
-    'title' => $this->ee($this->project->name),
+    'title' => $this->project->name,
     'meta_description' => $this->ee($this->project->subtitle),
     'tw_image' => $meta_img,
     'og_image' => $meta_img
@@ -93,24 +93,7 @@ $this->section('content');
 
 </div>
 
-<aside class="related-projects">
-    <div class="container-fluid">
-		<h2 class="green-title">
-		<?= $this->text('project-related') ?>
-		</h2>
-
-		<div class="row">
-	    <?php foreach ($this->related_projects as $related_project) : ?>
-
-	              <div class="col-sm-6 col-md-4 col-xs-12 spacer">
-	                <?= $this->insert('project/widgets/normal', ['project' => $related_project, 'admin' => false]) ?>
-	              </div>
-	    <?php endforeach ?>
-    	</div>
-
-    </div>
-</aside>
-
+    <?= $this->insert('project/partials/related_projects') ?>
 
 <!-- sticky menu -->
 
@@ -334,6 +317,29 @@ $this->section('content');
         $("div.row.call-info").hover(function(){
             $(".info-default-call").toggle();
             $(".info-hover-call").toggle();
+        });
+
+        // Delete support msg
+        $('.msg').on('click', ".delete-msg", function (e) {
+            e.preventDefault();
+            var ask = $(this).data('confirm');
+            var url = $(this).data('url');
+            var $item = $(this).closest('.msg');
+            var $error = $item.find('.error-message');
+            if(confirm(ask)) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    success: function(data) {
+                       //console.log('success', data);
+                      $item.remove();
+                    }
+                }).fail(function(data) {
+                  var error = JSON.parse(data.responseText);
+                   //console.log('error', data, error)
+                  $error.removeClass('hidden').html(error.error);
+                });
+            }
         });
 
 

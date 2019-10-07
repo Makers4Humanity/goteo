@@ -22,6 +22,7 @@ use Goteo\Library\Text;
 use Goteo\Library\Worth;
 use Goteo\Model\Message as SupportMessage;
 use Goteo\Model\Project;
+use Goteo\Model\Project\Account;
 use Goteo\Model\Project\ProjectLocation;
 use Goteo\Model\Invest;
 use Goteo\Model\Project\Favourite;
@@ -119,6 +120,15 @@ class ProjectController extends \Goteo\Core\Controller {
             $conf->publishing_estimation = $request->request->get('publishing_date');
             $conf->save();
 
+
+            // Save default fee
+            $accounts = new Account();
+            $accounts->project = $project->id;
+            $accounts->allowpp = false;
+            $accounts->fee = Config::get('fee');
+            $accounts->save();
+
+
             // CREATED EVENT
             $response = $this->dispatch(AppEvents::PROJECT_CREATED, new FilterProjectEvent($project))->getResponse();
             if($response instanceOf Response) return $response;
@@ -162,7 +172,7 @@ class ProjectController extends \Goteo\Core\Controller {
         // mensaje cuando, sin estar en campaña, tiene fecha de publicación
         if (!$project->isApproved()) {
             if (!empty($project->published)) {
-                if ($project->published > date('Y-m-d')) {
+                if ($project->published >= date('Y-m-d')) {
                     // si la fecha es en el futuro, es que se publicará
                     Message::info(Text::get('project-willpublish', date('d/m/Y', strtotime($project->published))));
                 } else {
@@ -303,12 +313,13 @@ class ProjectController extends \Goteo\Core\Controller {
             if ($show == 'participate') {
                 $viewData['worthcracy']=Worth::getAll();
                 $limit=15;
-                $viewData['investors_list']= Invest::investors($project->id, false, false, (int)$request->query->get('pag') * $limit, $limit, false);
+                $pag = max(0, (int)$request->query->get('pag'));
+                $viewData['investors_list']= Invest::investors($project->id, false, false, $pag * $limit, $limit, false);
                 $viewData['investors_total'] = Invest::investors($project->id, false, false, 0, 0, true);
                 $viewData['investors_limit'] = $limit;
 
                 //Colaborations
-                $viewData['messages'] = SupportMessage::getAll($project->id);
+                $viewData['messages'] = SupportMessage::getAll($project->id, Lang::current());
 
                 if (empty($user)) {
                     Message::info(Text::html('user-login-required'));

@@ -55,6 +55,7 @@ class Mail extends \Goteo\Core\Model {
         $log,
         $status = 'pending',
         $message_id = null,
+        $communication_id = null,
         $lang = null;
 
     /**
@@ -205,6 +206,25 @@ class Mail extends \Goteo\Core\Model {
     }
 
     /**
+     * Get instance of mail already on table using communication_id identifier and an optional lang parameter.
+     * @return [type] [description]
+     */
+    static public function getFromCommunicationId($communication_id, $lang = null) {
+        $sql = "SELECT * FROM mail WHERE communication_id = :communication_id";
+        $values[':communication_id'] = $communication_id;
+        if (isset($lang)) {
+            $sql .= " AND lang = :lang";
+            $values[':lang'] = $lang;
+        }
+        // die(\sqldbg($sql, $values));
+        if ($query = static::query($sql, $values)) {
+            if( ! ($mail = $query->fetchAll(\PDO::FETCH_CLASS,__CLASS__)) ) return null;
+            return $mail;
+        }
+        return null;
+    }
+
+    /**
      * Creates a new instance of Mail from common vars
      * @return [type] [description]
      */
@@ -250,7 +270,8 @@ class Mail extends \Goteo\Core\Model {
         $mail->subject = $tpl->title;
         $mail->template = $tpl->id;
         $text = $tpl->parseText();
-        $mail->content = ($template == Template::NEWSLETTER) ? Newsletter::getContent($text, $mail->lang) : $content = $text;
+        // $mail->content = ($template == Template::NEWSLETTER) ? Newsletter::getContent($text, $mail->lang) : $content = $text;
+        $mail->content = $text;
         // En el contenido:
         if($vars) {
             $mail->content = str_replace(array_keys($vars), array_values($vars), $mail->content);
@@ -494,38 +515,54 @@ class Mail extends \Goteo\Core\Model {
      */
     public function render($plain = false, Array $extra_vars = [], $process_links = true) {
         $content = $this->content;
+
+        $extra_vars['content'] = $content;
+        $extra_vars['subject'] = $this->subject;
+        $extra_vars['unsubscribe'] = SITE_URL . '/user/leave?email=' . $this->to;
+
+        if ($plain) {
+            return strip_tags($this->content) . ($extra_vars['alternate'] ? "\n\n" . $extra_vars['alternate'] : '');
+        }
+
+        if (isset($this->communication_id)) {
+            $communication = Communication::get($this->communication_id);
+            $extra_vars['type'] = $communication->type;
+            $extra_vars['image'] = $communication->getImage()->getLink(1920,335,true, true);
+            $extra_vars['promotes'] = $communication->getCommunicationProjects($communication->id);
+        }
+
+        if ($this->template == Template::NEWSLETTER) {
+            $extra_vars['unsubscribe'] = SITE_URL . '/user/unsubscribe/' . $this->getToken(); // ????
+            $template = "newsletter";
+            View::setTheme('responsive');
+
+        } else if ($this->template == Template::COMMUNICATION) {
+            View::setTheme('responsive');
+            $template = "default";
+        } else {
+            $template = "simple";
+        }
+
+        $engine = View::createEngine();
+        $engine->setFolders(View::getFolders());
+
+        $content = $engine->render('email/' . $template, $extra_vars, false);
+
         // Process links if tracker var present
         if($process_links) {
-            // compilar links y cambiarlos por redirecciones a un controlador
             $content = preg_replace_callback([
                 '/(<a.*)href=(")([^"]*)"([^>]*)>/U',
                 "/(<a.*)href=(')([^']*)'([^>]*)>/U"
                 ],
                 function ($matches){
                     $url = $matches[3];
-                    $new = SITE_URL . '/mail/url/' . \mybase64_encode(md5(Config::get('secret') . '-' . $this->to . '-' . $this->id. '-' . $url) . '¬' . $this->to  . '¬' . $this->id . '¬' . $url);
+                    $new = SITE_URL . '/mail/url/' . self::encodeToken([$this->to, $this->id, $url]);
                     return $matches[1] . 'href="' . $new . '"'. $matches[4] . '>';
                 },
                 $content);
         }
 
-        $extra_vars['content'] = $content;
-        $extra_vars['subject'] = $this->subject;
-
-        $extra_vars['unsubscribe'] = SITE_URL . '/user/leave?email=' . $this->to;
-
-        if ($plain) {
-            return strip_tags($this->content) . ($extra_vars['alternate'] ? "\n\n" . $extra_vars['alternate'] : '');
-        }
-        // Render in a separate instance of Foil to avoid some unexpected problems
-        $engine = View::createEngine();
-        $engine->setFolders(View::getFolders());
-        // para plantilla boletin
-        if ($this->template == Template::NEWSLETTER) {
-            $extra_vars['unsubscribe'] = SITE_URL . '/user/unsubscribe/' . $this->getToken(); // ????
-            return $engine->render('email/newsletter', $extra_vars, false);
-        }
-        return $engine->render('email/default', $extra_vars, false);
+        return $content;
     }
 
     /**
@@ -541,7 +578,7 @@ class Mail extends \Goteo\Core\Model {
         $this->email = ($this->massive) ? 'any' : $this->to;
 
         try {
-            $this->dbInsertUpdate(['email', 'subject', 'content', 'template', 'node', 'lang', 'sent', 'error', 'message_id']);
+            $this->dbInsertUpdate(['email', 'subject', 'content', 'template', 'node', 'lang', 'sent', 'error', 'message_id', 'communication_id']);
             return true;
         }
         catch(\PDOException $e) {
